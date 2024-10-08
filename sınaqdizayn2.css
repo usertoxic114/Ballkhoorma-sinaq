@@ -135,6 +135,7 @@ footer p {
     margin-bottom: 15px;
 }
 
+/* Keyframe Animations */
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -154,5 +155,68 @@ footer p {
     100% {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+/* Media Queries for Mobile Phones */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .company-logo img {
+        width: 80px;
+    }
+
+    .form-title h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    form {
+        gap: 15px;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 1.1em;
+    }
+
+    footer {
+        padding: 15px;
+        font-size: 1.1em;
+    }
+}
+
+/* Media Queries for Small Mobile Phones */
+@media (max-width: 480px) {
+    header {
+        padding: 10px;
+    }
+
+    .company-logo img {
+        width: 60px;
+    }
+
+    .form-title h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 1em;
     }
 }
