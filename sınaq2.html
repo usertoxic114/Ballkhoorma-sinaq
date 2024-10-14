@@ -3,20 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Balkhoorma Form</title>
+    <title>Balkhoorma Form</title> 
     <link rel="stylesheet" href="sınaqdizayn2.css">
+    <style>
+        /* Qeydiyyat bölməsi stili */
+        .registration-container {
+            display: none; /* Başlanğıcda gizli */
+            background: #f9f9f9;
+            border: 1px solid #0073e6;
+            border-radius: 10px;
+            padding: 15px;
+            position: absolute; /* Sağ küncdə yerləşmək üçün */
+            top: 70px; /* Başlıqdan aşağı */
+            right: 20px; /* Sağdan məsafə */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 250px; /* Arzuolunan genişlik */
+            z-index: 10; /* Üstlük */
+        }
+
+        .registration-container h3 {
+            color: #0073e6;
+            margin-bottom: 10px;
+        }
+
+        .registration-container label {
+            font-size: 1em;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .registration-container input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 2px solid #0073e6;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .registration-container input:focus {
+            border-color: #ff5722;
+        }
+
+        /* Yeni düymə stili */
+        .toggle-registration {
+            cursor: pointer;
+            color: #006400; /* Tünd yaşıl */
+            margin-left: 10px;
+            font-weight: bold;
+            text-decoration: underline; /* Altı xətlidir */
+        }
+    </style>
+    <script>
+        function toggleRegistration() {
+            const registrationContainer = document.querySelector('.registration-container');
+            registrationContainer.style.display = registrationContainer.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 </head>
 <body>
 
     <div class="form-container">
         <header>
             <div class="company-logo">
-                <img src="logobal1.ico" alt=>
+                <img src="logobal1.ico" alt="Company Logo">
             </div>
             <div class="form-title">
                 <h1>"BALKHOORMA" MMC</h1>
                 <p>QIDA TƏHLÜKƏSİZLİYİ İDARƏETMƏ SİSTEMİ</p>
-                <p>MÜRACİƏT ANKET FORMASI</p>
+                <p>MÜRACİƏT ANKET FORMASI 
+                    <span class="toggle-registration" onclick="toggleRegistration()">[Qeydiyyat]</span>
+                </p>
             </div>
             <div class="form-meta">
                 <p>Sənəd №: FORM-BX-017-005</p>
@@ -91,6 +148,19 @@
             <p>Müraciət edənin imzası: ______________________</p>
             <p>Doldurulma tarixi: ______________________</p>
         </footer>
+
+        <!-- Qeydiyyat bölməsi -->
+        <div class="registration-container">
+            <h3>Qeydiyyat</h3>
+            <label>Ad:</label>
+            <input type="text" name="reg_name" placeholder="Adınızı daxil edin..." required>
+
+            <label>Email:</label>
+            <input type="email" name="reg_email" placeholder="Emailinizi daxil edin..." required>
+
+            <label>Şifrə:</label>
+            <input type="password" name="reg_password" placeholder="Şifrənizi daxil edin..." required>
+        </div>
     </div>
 
 </body>
