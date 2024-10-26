@@ -6,82 +6,61 @@
     <title>Balkhoorma Form</title>
     <link rel="stylesheet" href="sınaqdizayn2.css">
     <style>
-        /* Qeydiyyat bölməsi stili */
-        .registration-container {
-            display: none; /* Başlanğıcda gizli */
-            background: linear-gradient(135deg, #0073e6, #ff5722); /* Rəngarəng gradient */
-            color: #ffffff; /* Yazının rəngi ağ */
-            border: none; /* Sərhədi sil */
-            border-radius: 10px;
-            padding: 15px;
-            position: fixed; /* Mobil telefon üçün sabit yer */
-            top: 70px; /* Başlıqdan aşağı */
-            right: 20px; /* Sağdan məsafə */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Kölgə əlavə et */
-            width: 250px; /* Arzuolunan genişlik */
-            z-index: 10; /* Üstlük */
-        }
-
-        .registration-container h3 {
-            color: #ffffff; /* Başlıq yazısının rəngi */
-            margin-bottom: 10px;
-        }
-
-        .registration-container label {
-            font-size: 1em;
-            color: #ffffff; /* Yazının rəngi ağ */
-            font-weight: bold;
-        }
-
-        .registration-container input {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 2px solid #ffffff; /* Sərhədin rəngi ağ */
-            border-radius: 5px;
-            transition: border-color 0.3s;
-        }
-
-        .registration-container input:focus {
-            border-color: #ff5722; /* Fokuslandıqda sərhədin rəngi */
-        }
-
-        /* Yeni düymə stili */
-        .toggle-registration {
-            cursor: pointer;
-            color: #ff5722; /* Narıncı */
-            margin-left: 10px;
-            font-weight: bold;
-            text-decoration: none; /* Alt xətti sil */
-            font-size: 1.5em; /* Daha böyük ölçü */
-            font-family: 'Arial Black', Arial, sans-serif; /* Şrift Arial Black */
+        /* Ümumi stil */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
         }
 
         /* Başlıqların stili */
         .form-title h1 {
-            color: #ffffff; /* Başlığın rəngi ağ */
-            margin: 0;
-            font-size: 32px; /* Başlığın ölçüsü */
+            color: #000000;
+            font-size: 32px;
             text-align: center; /* Mərkəzləşdirilmiş */
         }
 
-        .form-meta p {
-            font-size: 14px; /* Daha kiçik ölçü */
+        .form-title p {
+            color: #000000;
             text-align: center; /* Mərkəzləşdirilmiş */
-            margin: 5px 0; /* Üst və alt margin */
-            color: #333; /* Mətni daha oxunaqlı etmək üçün qaranlıq rəng */
         }
 
-        /* Müraciət edənin qeydləri bölməsi */
+        /* Qeydiyyat linkinin stili */
+        .toggle-registration {
+            color: orange;
+            font-size: 2em;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-right: 20px;
+            text-align: center;
+            display: block; /* Block-level for centering */
+        }
+
+        /* Müraciət edən haqqında qeydlər */
         .large-textarea {
             width: 100%;
-            height: 150px; /* Daha böyük hündürlük */
+            height: 200px;
             padding: 10px;
             border-radius: 5px;
             border: 2px solid #cccccc;
-            font-size: 1em;
+            font-size: 1.5em;
             margin-top: 10px;
         }
+
+        /* Doldurma tarixi stili */
+.fill-date {
+    font-size: 1.2em;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff5722, #0073e6);
+    -webkit-background-clip: text; /* Safari, Chrome */
+    -moz-background-clip: text; /* Firefox (köhnə versiyalar üçün) */
+    background-clip: text; /* Bütün digər brauzerlər */
+    -webkit-text-fill-color: transparent; /* Safari, Chrome */
+    color: transparent; /* Yalnızca dəstəklənməyən brauzerlərdə */
+}
+
 
         /* Müraciətin təsdiqi stili */
         .confirmation-message {
@@ -95,69 +74,82 @@
             text-align: center;
         }
 
-        /* Mobil interfeys üçün uyğunlaşdırma */
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 15px;
-            }
-
+        /* Mobil interfeys üçün düzəlişlər */
+        @media (max-width: 600px) {
             .form-title h1 {
-                font-size: 24px; /* Daha kiçik ölçü */
+                font-size: 24px;
             }
 
-            .registration-container {
-                width: 100%; /* Mobil cihazlarda tam genişlik */
-                top: 0;
-                right: 0;
-                border-radius: 0; /* Sərhəd radiusunu sil */
+            .form-title p {
+                font-size: 14px;
             }
 
-            .form-meta p {
-                font-size: 12px; /* Daha kiçik ölçü */
-            }
-
-            input, select {
-                font-size: 1em; /* Bütün giriş sahələri üçün uyğun ölçü */
-                padding: 8px;
+            .toggle-registration {
+                font-size: 1.5em;
             }
 
             .large-textarea {
-                height: 120px; /* Daha az hündürlük */
+                height: 150px;
             }
+        }
+
+        /* Forma düymələri */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Logo stil */
+        .company-logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .logo {
+            width: 120px; /* Logonun ölçüsü */
+            height: auto;
         }
     </style>
     <script>
-        function toggleRegistration() {
-            const registrationContainer = document.querySelector('.registration-container');
-            registrationContainer.style.display = registrationContainer.style.display === 'block' ? 'none' : 'block';
-        }
-
         // Doldurulma tarixini avtomatik göstərmək
         window.onload = function() {
             const today = new Date().toLocaleDateString();
             document.getElementById('fill-date').innerText = today;
-
-            // Ekrana vuranda qeydiyyat panelindən çıxmaq
-            document.addEventListener('click', function(event) {
-                const registrationContainer = document.querySelector('.registration-container');
-                const toggleButton = document.querySelector('.toggle-registration');
-                if (!registrationContainer.contains(event.target) && !toggleButton.contains(event.target)) {
-                    registrationContainer.style.display = 'none';
-                }
-            });
         };
 
-        // Qeydiyyatdan keçəndən sonra müraciətin təsdiqi
-        function submitRegistration(event) {
-            event.preventDefault();
-            const registrationContainer = document.querySelector('.registration-container');
-            registrationContainer.style.display = 'none';
+        // Məlumatı SQL verilənlər bazasına əlavə et
+        function insertData(form) {
+            const formData = new FormData(form);
 
-            const confirmationMessage = document.querySelector('.confirmation-message');
-            confirmationMessage.style.display = 'block';
-
-            // İmza yerini dəyişmək
-            document.getElementById('signature-section').innerText = 'Müraciətin təsdiqi';
+            // AJAX ilə serverə göndərmə
+            fetch('your-server-endpoint.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector('.confirmation-message').style.display = 'block';
+                } else {
+                    alert('Xəta: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
     </script>
 </head>
@@ -166,26 +158,18 @@
     <div class="form-container">
         <header>
             <div class="company-logo">
-                <img src="logobal1.ico" alt="Company Logo">
+                <img src="logobal1.ico" alt="BALKHOORMA Logo" class="logo">
             </div>
             <div class="form-title">
                 <h1>"BALKHOORMA" MMC</h1>
                 <p>QIDA TƏHLÜKƏSİZLİYİ İDARƏETMƏ SİSTEMİ</p>
-                <p>MÜRACİƏT ANKET FORMASI 
-                    <span class="toggle-registration" onclick="toggleRegistration()">[Qeydiyyat]</span>
-                </p>
-            </div>
-            <div class="form-meta">
-                <p>Sənəd №: FORM-BX-017-005</p>
-                <p>Nəşr Tarixi: 01/10/2020</p>
-                <p>Dəyişiklik №: 00</p>
-                <p>Səhifə №: 1/1</p>
+                <p>MÜRACİƏT ANKET FORMASI</p>
             </div>
         </header>
 
         <section>
             <h2>1. ŞƏXSİ MƏLUMAT</h2>
-            <form>
+            <form onsubmit="event.preventDefault(); insertData(this);">
                 <label>Ad:</label>
                 <input type="text" name="firstname" placeholder="Adınızı daxil edin..." required>
 
@@ -211,64 +195,56 @@
                 <input type="text" name="registered_city" placeholder="Qeydiyyat şəhərini daxil edin..." required>
 
                 <label>Qeydiyyatda olduğu ünvan:</label>
-                <input type="text" name="registered_address" placeholder="Qeydiyyat ünvanınızı daxil edin..." required>
+                <input type="text" name="registered_address" placeholder="Qeydiyyatda olduğunuz ünvanı daxil edin..." required>
 
                 <label>Vətəndaşlıq:</label>
                 <select name="citizenship" required>
                     <option value="azerbaijan">Azərbaycan</option>
                     <option value="other">Digər</option>
                 </select>
-            </form>
-        </section>
 
-        <section>
-            <h2>2. ƏLAQƏ MƏLUMATLARI</h2>
-            <form>
-                <label>Telefonlar (Ev):</label>
-                <input type="text" name="phone_home" placeholder="Ev telefon nömrənizi daxil edin..." required>
+                <label>Cins:</label>
+                <select name="gender" required>
+                    <option value="male">Kişi</option>
+                    <option value="female">Qadın</option>
+                </select>
 
-                <label>Telefonlar (Mobil):</label>
-                <input type="text" name="phone_mobile" placeholder="Mobil telefon nömrənizi daxil edin..." required>
+                <label>Hərbi xidmət:</label>
+                <select name="military_service" required>
+                    <option value="useful">Yararlıdır</option>
+                    <option value="unfit">Yararsızdır</option>
+                    <option value="exempted">Yararlıdır, xidmət keçməyib</option>
+                </select>
+            </section>
 
-                <label>Elektron poçt ünvanı:</label>
-                <input type="email" name="email" placeholder="E-poçt ünvanınızı daxil edin..." required>
-            </form>
-        </section>
+            <section>
+                <h2>2. ƏLAQƏ MƏLUMATLARI</h2>
+                <label>Ev telefon:</label>
+                <input type="tel" name="home_phone" placeholder="Ev telefon nömrənizi daxil edin...">
 
-        <section>
-            <h2>3. MÜRACİƏT EDƏN HAQQINDA QEYDLƏR</h2>
-            <form>
-                <label>1. </label>
-                <textarea class="large-textarea" name="notes" placeholder="Müraciət edənin qeydlərini daxil edin..."></textarea>
-            </form>
-        </section>
-
-        <footer>
-            <p id="signature-section">Müraciət edənin təsdiqi: ______________________</p>
-            <div class="confirmation-message">Müraciət uğurla təsdiqləndi!</div>
-            <p>Doldurulma tarixi: <span id="fill-date"></span></p>
-        </footer>
-
-        <!-- Qeydiyyat bölməsi -->
-        <div class="registration-container">
-            <h3>Qeydiyyat</h3>
-            <form onsubmit="submitRegistration(event)">
-                <label>Ad:</label>
-                <input type="text" name="reg_name" placeholder="Adınızı daxil edin..." required>
+                <label>Mobil telefon:</label>
+                <input type="tel" name="mobile_phone" placeholder="Mobil telefon nömrənizi daxil edin..." required>
 
                 <label>Email:</label>
-                <input type="email" name="reg_email" placeholder="Emailinizi daxil edin..." required>
+                <input type="email" name="email" placeholder="Emailinizi daxil edin..." required>
+            </section>
 
-                <label>Şifrə:</label>
-                <input type="password" name="reg_password" placeholder="Şifrənizi daxil edin..." required>
+            <section>
+                <h2>3. MÜRACİƏT EDƏN HAQQINDA QEYDLƏR</h2>
+                <textarea class="large-textarea" name="applicant_notes" placeholder="Müraciət edən haqqında qeydləri daxil edin..." required></textarea>
+            </section>
 
-                <label>Şifrəni təsdiq edin:</label>
-                <input type="password" name="reg_password_confirm" placeholder="Şifrənizi təsdiq edin..." required>
+            <section>
+                <div class="fill-date">Doldurma Tarixi: <span id="fill-date"></span></div>
+                <div class="button-container">
+                    <button type="submit" class="btn btn-submit">Göndər</button>
+                </div>
+            </section>
+        </form>
 
-                <button type="submit">Qeydiyyatdan keç</button>
-            </form>
+        <div class="confirmation-message">
+            Müraciətiniz uğurla göndərildi!
         </div>
     </div>
-
 </body>
 </html>
