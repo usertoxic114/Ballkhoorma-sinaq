@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Balkhoorma</title>
     <style>
+        /* Ümumi üslublar */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -75,34 +76,94 @@
             text-decoration: underline;
         }
 
-        .grid-button {
-            margin-top: 20px;
-            background-color: #28a745;
+        /* Mobil interfeys üçün media query */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 20px;
+                font-size: 14px;
+            }
+
+            .login-container h2 {
+                font-size: 24px;
+            }
+
+            input[type="text"], input[type="password"] {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .back-link a {
+                font-size: 12px;
+            }
         }
 
-        .grid-button:hover {
-            background-color: #218838;
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .login-container h2 {
+                font-size: 20px;
+            }
+
+            input[type="text"], input[type="password"] {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            button {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .back-link a {
+                font-size: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form action="login-handler.php" method="POST">
+        <form id="login-form">
             <label for="username">İstifadəçi adı:</label>
             <input type="text" id="username" name="username" placeholder="İstifadəçi adınızı daxil edin..." required>
 
             <label for="password">Parol:</label>
             <input type="password" id="password" name="password" placeholder="Parolunuzu daxil edin..." required>
 
-            <button type="submit">Daxil ol</button>
+            <button type="button" onclick="handleLogin()">Daxil ol</button>
         </form>
-
-        <button class="grid-button" onclick="window.location.href='gridsinaq.html';">HR Menecer Panelinə keç</button>
 
         <div class="back-link">
             <p><a href="sınaq2.html">Geri ana səhifəyə qayıt</a></p>
         </div>
     </div>
+
+    <script>
+        function handleLogin() {
+            // Daxil olmaq üçün müəyyən edilmiş istifadəçi adı və parol
+            const correctUsername = "admin";
+            const correctPassword = "12345";
+
+            // İstifadəçi tərəfindən daxil edilən məlumatlar
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Doğrulama
+            if (username === correctUsername && password === correctPassword) {
+                alert("Uğurlu giriş! HR Menecer Panelinə yönləndirilirsiniz...");
+                window.location.href = "gridsinaq.html"; // Grid səhifəsinə keçid
+            } else {
+                alert("İstifadəçi adı və ya parol yanlışdır. Yenidən cəhd edin.");
+            }
+        }
+    </script>
 </body>
 </html>
