@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İşçi Məlumatlar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filter-container input {
+            width: calc(100% - 10px);
+            max-width: 400px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #6a11cb;
+            background-image: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .edit-btn {
+            background-color: #0073e6;
+        }
+
+        .delete-btn {
+            background-color: #e63946;
+        }
+
+        .add-btn {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover, .action-btn:hover {
+            opacity: 0.9;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            width: 400px;
+            z-index: 10;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .modal input, .modal select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal .modal-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .modal .save-btn {
+            background-color: #0073e6;
+            color: white;
+        }
+
+        .modal .cancel-btn {
+            background-color: #e63946;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>İşçi Məlumatatlar</h1>
+
+        <!-- Filter bölməsi -->
+        <div class="filter-container">
+            <input type="text" id="filter-input" placeholder="Məlumatları filtrlə (Ad, Soyad...)">
+            <button class="add-btn" onclick="openModal()">Məlumat Əlavə Et</button>
+        </div>
+
+       <!-- Cədvəl -->
+       <table>
+        <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Ata Adı</th>
+                <th>Doğum İli</th>
+                <th>Yaşadığı Şəhər</th>
+                <th>Təhsil Səviyyəsi</th>
+                <th>Vətəndaşlıq</th>
+                <th>Cins</th>
+                <th>Hərbi Xidmət</th>
+                <th>Mobil Telefon</th>
+                <th>Əməliyyatlar</th>
+            </tr>
+        </thead>
+        <tbody id="grid-data">
+            <!-- Yeni məlumatlar buraya əlavə olunacaq -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal (Məlumat Əlavə Etmək üçün) -->
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="modal">
+    <h2>Məlumat Əlavə Et</h2>
+    <input type="text" id="ad" placeholder="Ad" required>
+    <input type="text" id="soyad" placeholder="Soyad" required>
+    <input type="text" id="ataAdi" placeholder="Ata Adı" required>
+    <input type="number" id="dogumIli" placeholder="Doğum İli" min="1944" max="2008" required>
+    <input type="text" id="seher" placeholder="Yaşadığı Şəhər" required>
+    <select id="tehsil">
+        <option value="orta">Orta</option>
+        <option value="pese">Peşə</option>
+        <option value="kollec">Kollec</option>
+        <option value="ali">Ali</option>
+    </select>
+    <select id="vetendashliq">
+        <option value="azerbaijan">Azərbaycan</option>
+        <option value="other">Digər</option>
+    </select>
+    <select id="cins">
+        <option value="male">Kişi</option>
+        <option value="female">Qadın</option>
+    </select>
+    <select id="herbiXidmet">
+        <option value="yararlıdır">Yararlıdır</option>
+        <option value="yararsızdır">Yararsızdır</option>
+        <option value="keçməyib">Xidmət Keçməyib</option>
+    </select>
+    <input type="tel" id="telefon" placeholder="Mobil Telefon" required>
+    <button class="modal-btn save-btn" onclick="saveData()">Yadda Saxla</button>
+    <button class="modal-btn cancel-btn" onclick="closeModal()">Ləğv Et</button>
+</div>
+
+<script>
+    // Modal açma və bağlama funksiyaları
+    function openModal() {
+        document.getElementById('modal').classList.add('active');
+        document.getElementById('overlay').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active');
+        document.getElementById('overlay').classList.remove('active');
+    }
+
+    // Yeni məlumatı yadda saxlama funksiyası
+    function saveData() {
+        const ad = document.getElementById('ad').value;
+        const soyad = document.getElementById('soyad').value;
+        const ataAdi = document.getElementById('ataAdi').value;
+        const dogumIli = document.getElementById('dogumIli').value;
+        const seher = document.getElementById('seher').value;
+        const tehsil = document.getElementById('tehsil').value;
+        const vetendashliq = document.getElementById('vetendashliq').value;
+        const cins = document.getElementById('cins').value;
+        const herbiXidmet = document.getElementById('herbiXidmet').value;
+        const telefon = document.getElementById('telefon').value;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${ad}</td>
+            <td>${soyad}</td>
+            <td>${ataAdi}</td>
+            <td>${dogumIli}</td>
+            <td>${seher}</td>
+            <td>${tehsil}</td>
+            <td>${vetendashliq}</td>
+            <td>${cins}</td>
+            <td>${herbiXidmet}</td>
+            <td>${telefon}</td>
+            <td>
+                <button class="action-btn edit-btn" onclick="editData(this)">Redaktə</button>
+                <button class="action-btn delete-btn" onclick="deleteData(this)">Sil</button>
+            </td>
+        `;
+        document.getElementById('grid-data').appendChild(row);
+        closeModal();  // Modalı bağla
+    }
+
+    // Məlumatı redaktə etmək funksiyası
+    function editData(button) {
+        const row = button.closest('tr');
+        const cells = row.querySelectorAll('td');
+        document.getElementById('ad').value = cells[0].textContent;
+        document.getElementById('soyad').value = cells[1].textContent;
+        document.getElementById('ataAdi').value = cells[2].textContent;
+        document.getElementById('dogumIli').value = cells[3].textContent;
+        document.getElementById('seher').value = cells[4].textContent;
+        document.getElementById('tehsil').value = cells[5].textContent;
+        document.getElementById('vetendashliq').value = cells[6].textContent;
+        document.getElementById('cins').value = cells[7].textContent;
+        document.getElementById('herbiXidmet').value = cells[8].textContent;
+        document.getElementById('telefon').value = cells[9].textContent;
+
+        // Redaktə edilən sətiri silmək
+        row.remove();
+
+        openModal();  // Modalı aç
+    }
+
+    // Məlumatı silmək funksiyası
+    function deleteData(button) {
+        const row = button.closest('tr');
+        row.remove();
+    }
+
+    // Filter funksiyası
+    const filterInput = document.getElementById('filter-input');
+    const tableRows = document.querySelectorAll('#grid-data tr');
+
+    filterInput.addEventListener('input', () => {
+        const filterValue = filterInput.value.toLowerCase();
+        tableRows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(filterValue));
+            row.style.display = match ? '' : 'none';
+        });
+    });
+</script>
+</body>
+</html> 
