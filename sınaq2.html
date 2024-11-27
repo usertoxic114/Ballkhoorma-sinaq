@@ -137,13 +137,50 @@
     border-radius: 20px; /* Küncləri yumru etmək üçün */
 }
 
+  /* Login keçidi bölməsi üçün dizayn */
+  .toggle-login {
+            text-align: center; /* Mərkəzləşdir */
+            margin: 20px 0; /* Yuxarı və aşağı boşluq */
+        }
+
+        .login-button {
+            display: inline-block;
+            background-color: #0073e6; /* Mavi rəng */
+            color: #ffffff; /* Ağ mətn */
+            text-decoration: none; /* Alt xətt olmadan link */
+            padding: 10px 20px; /* Daxili boşluq */
+            border-radius: 5px; /* Yumru künclər */
+            font-size: 16px; /* Mətn ölçüsü */
+            font-weight: bold; /* Mətn qalınlığı */
+            transition: background-color 0.3s, transform 0.2s; /* Yavaş keçid effekti */
+        }
+
+        .login-button:hover {
+            background-color: #005bb5; /* Tünd mavi hover rəngi */
+            transform: scale(1.05); /* Klik edəndə bir az böyüsün */
+            text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7); /* Parlaq kölgə */
+        }
     </style>
+</head>
+  
+  </style>
     <script>
         // Doldurulma tarixini avtomatik göstərmək
         window.onload = function() {
             const today = new Date().toLocaleDateString();
             document.getElementById('fill-date').innerText = today;
         };
+// Doldurulma tarixini avtomatik göstərmək
+window.onload = function() {
+    const today = new Date().toLocaleDateString();
+    document.getElementById('fill-date').innerText = today;
+
+    // Doğum ili üçün max və min təyin edin
+    const currentYear = new Date().getFullYear();
+    const birthYearInput = document.getElementById('birthyear');
+    birthYearInput.max = currentYear - 16; // Maksimum 16 yaş
+    birthYearInput.min = currentYear - 80; // Minimum 80 yaş
+};
 
         // Məlumatı SQL verilənlər bazasına əlavə et
         function insertData(form) {
@@ -175,7 +212,7 @@
             </div>
             <div class="form-title">
                 <h1>"BALKHOORMA" MMC</h1>
-                <p>QIDA TƏHLÜKƏSİZLİYİ İDARƏETMƏ SİSTEMİ</p>
+                <p>QİDA TƏHLÜKƏSİZLİYİ İDARƏETMƏ SİSTEMİ</p>
                 <p>MÜRACİƏT ANKET FORMASI</p>
             </div>
         </header>
@@ -195,8 +232,8 @@
                 <label>Doğum yeri:</label>
                 <input type="text" name="birthplace" placeholder="Doğum yerinizi daxil edin..." required>
 
-                <label>Doğum tarixi:</label>
-                <input type="date" name="birthdate" required>
+                <label>Doğum ili:</label>
+<input type="number" name="birthyear" id="birthyear" placeholder="Doğum ilini daxil edin..." required>
 
                 <label>Yaşadığı şəhər:</label>
                 <input type="text" name="residence_city" placeholder="Yaşadığınız şəhəri daxil edin..." required>
@@ -209,6 +246,18 @@
 
                 <label>Qeydiyyatda olduğu ünvan:</label>
                 <input type="text" name="registered_address" placeholder="Qeydiyyatda olduğunuz ünvanı daxil edin..." required>
+
+                <label>Təhsil səviyyəsi:</label>
+                <select name="education_level" required>
+                    <option value="orta">Orta</option>
+                    <option value="pese">Peşə</option>
+                    <option value="kollec">Kollec</option>
+                    <option value="ali">Ali</option>
+                </select>
+                
+                <label>İxtisas </label>
+                <input type="text" name="specialization" placeholder="İxtisasınızı daxil edin...">                
+                </section>
 
                 <label>Vətəndaşlıq:</label>
                 <select name="citizenship" required>
@@ -244,17 +293,19 @@
 
             <section>
                 <h2>3. MÜRACİƏT EDƏN HAQQINDA QEYDLƏR</h2>
-                <textarea class="large-textarea" name="applicant_notes" placeholder="Müraciət edən haqqında qeydləri daxil edin..." required></textarea>
+                <textarea class="large-textarea" name="applicant_notes" placeholder="Müraciət edən haqqında qeydləri daxil edin..." ></textarea>
             </section>
-
-            <section>
                 <div class="fill-date">Doldurma Tarixi: <span id="fill-date"></span></div>
                 <div class="button-container">
                     <button type="submit" class="btn btn-submit">Göndər</button>
                 </div>
             </section>
+              <!-- Login keçidi hissəsi -->
+        <div class="toggle-login">
+            <p><a href="loginsinaq.html" class="login-button">Login səhifəsinə keç</a></p>
+        </div>
         </form>
-
+       
         <div class="confirmation-message">
             Müraciətiniz uğurla göndərildi!
         </div>
