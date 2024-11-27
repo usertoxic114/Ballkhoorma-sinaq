@@ -152,6 +152,86 @@
             margin-top: 10px;
         }
 
+        @media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-container input {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    table th, table td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    .add-btn {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    .action-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .modal {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .modal input, .modal select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .modal .modal-btn {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    .add-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .modal {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .modal input, .modal select {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .modal .modal-btn {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
         .overlay {
             display: none;
             position: fixed;
@@ -166,36 +246,6 @@
         .overlay.active {
             display: block;
         }
-          
-    @media (max-width: 768px) {
-        table, thead, tbody, th, td, tr {
-            display: block;
-        }
-
-        thead tr {
-            display: none;
-        }
-
-        tbody tr {
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        td {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 5px;
-        }
-
-        td::before {
-            content: attr(data-label);
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #444;
-        }
-    }
     </style>
 </head>
 <body>
@@ -290,22 +340,27 @@
         const telefon = document.getElementById('telefon').value;
 
         const row = document.createElement('tr');
+        row.innerHTML = 
         row.innerHTML = `
-            <td>${ad}</td>
-            <td>${soyad}</td>
-            <td>${ataAdi}</td>
-            <td>${dogumIli}</td>
-            <td>${seher}</td>
-            <td>${tehsil}</td>
-            <td>${vetendashliq}</td>
-            <td>${cins}</td>
-            <td>${herbiXidmet}</td>
-            <td>${telefon}</td>
-            <td>
-                <button class="action-btn edit-btn" onclick="editData(this)">Redaktə</button>
-                <button class="action-btn delete-btn" onclick="deleteData(this)">Sil</button>
-            </td>
-        `;
+    <td>${ad}</td>
+    <td>${soyad}</td>
+    <td>${ataAdi}</td>
+    <td>${dogumIli}</td>
+    <td>${seher}</td>
+    <td>${tehsil}</td>
+    <td>${vetendashliq}</td>
+    <td>${cins}</td>
+    <td>${herbiXidmet}</td>
+    <td>${telefon}</td>
+    <td>
+        <button class="action-btn edit-btn" onclick="editData(this)">Redaktə</button>
+        <button class="action-btn delete-btn" onclick="deleteData(this)">Sil</button>
+    </td>
+`;
+
+;
+
+        ;
         document.getElementById('grid-data').appendChild(row);
         closeModal();  // Modalı bağla
     }
@@ -339,16 +394,20 @@
 
     // Filter funksiyası
     const filterInput = document.getElementById('filter-input');
+
+filterInput.addEventListener('input', () => {
+    const filterValue = filterInput.value.toLowerCase();
+
+    // Hər dəfə `tableRows`-u yenidən təyin edin
     const tableRows = document.querySelectorAll('#grid-data tr');
 
-    filterInput.addEventListener('input', () => {
-        const filterValue = filterInput.value.toLowerCase();
-        tableRows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(filterValue));
-            row.style.display = match ? '' : 'none';
-        });
+    tableRows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(filterValue));
+        row.style.display = match ? '' : 'none';
     });
+});
+
 </script>
 </body>
 </html> 
