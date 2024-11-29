@@ -207,46 +207,54 @@
     }
 }
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 20px;
-    }
-
-    .add-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-    }
-
-    .modal {
-        width: 100%;
-        border-radius: 0;
-    }
-
-    .modal input, .modal select {
-        font-size: 12px;
-        padding: 6px;
-    }
-
-    .modal .modal-btn {
-        font-size: 12px;
-        padding: 6px;
-    }
-}
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 5;
+/* Yeni Mobil Uyğunlaşdırma CSS kodu */
+@media (max-width: 768px) {
+            table {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap; /* Cədvəl elementlərinin sətirlər üzrə keçməsi */
+            }
+            th, td {
+                white-space: normal; /* Sütunlarda mətni yerinə yetirməyə imkan verir */
+                word-wrap: break-word;
+            }
         }
 
-        .overlay.active {
-            display: block;
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .edit-btn {
+            background-color: #0073e6;
+        }
+
+        .delete-btn {
+            background-color: #e63946;
+        }
+
+        .add-btn {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover, .action-btn:hover {
+            opacity: 0.9;
         }
     </style>
+</head>
 </head>
 <body>
     <div class="container">
@@ -254,9 +262,13 @@
 
         <!-- Filter bölməsi -->
         <div class="filter-container">
+            <button class="add-btn" onclick="exportToExcel()">Excel-ə Export</button>
+        </div>
+        <div class="filter-container">
             <input type="text" id="filter-input" placeholder="Məlumatları filtrlə (Ad, Soyad...)">
             <button class="add-btn" onclick="openModal()">Məlumat Əlavə Et</button>
         </div>
+        
 
        <!-- Cədvəl -->
        <table>
@@ -312,6 +324,8 @@
     <input type="tel" id="telefon" placeholder="Mobil Telefon" required>
     <button class="modal-btn save-btn" onclick="saveData()">Yadda Saxla</button>
     <button class="modal-btn cancel-btn" onclick="closeModal()">Ləğv Et</button>
+</div>
+
 </div>
 
 <script>
@@ -407,6 +421,34 @@ filterInput.addEventListener('input', () => {
         row.style.display = match ? '' : 'none';
     });
 });
+function exportToExcel() {
+    const table = document.querySelector('table'); // Cədvəli seçir
+    const rows = table.rows; // Cədvəl sətirlərini seçir
+
+    let csvContent = '\uFEFF'; // UTF-8 BOM əlavə olunur (simvol problemlərini həll etmək üçün)
+
+    // Başlıq sətiri (thead hissəsi)
+    const headers = Array.from(rows[0].querySelectorAll('th')).map(header => header.textContent);
+    csvContent += headers.join(',') + '\n';
+
+    // Məlumat sətirləri (tbody hissəsi)
+    for (let i = 1; i < rows.length; i++) {
+        const cells = Array.from(rows[i].querySelectorAll('td')).map(cell => `"${cell.textContent}"`);
+        csvContent += cells.join(',') + '\n';
+    }
+
+    // CSV faylı yaradıb yükləyir
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'melumatlar.csv';
+    link.style.display = 'none';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 
 </script>
 </body>
