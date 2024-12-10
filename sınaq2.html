@@ -128,12 +128,12 @@
         /* Logo stil */
         .company-logo {
     text-align: center;
-    margin: 20px 0;
+    margin: 40px 0;
 }
 
 .logo {
-    width: 180px; /* Logonun ölçüsü */
-    height: auto;
+    width: 250px; /* Logonun ölçüsü */
+    height: 200;
     border-radius: 20px; /* Küncləri yumru etmək üçün */
 }
 
@@ -179,7 +179,7 @@ window.onload = function() {
     const currentYear = new Date().getFullYear();
     const birthYearInput = document.getElementById('birthyear');
     birthYearInput.max = currentYear - 16; // Maksimum 16 yaş
-    birthYearInput.min = currentYear - 80; // Minimum 80 yaş
+    birthYearInput.min = currentYear - 70; // Minimum 70 yaş
 };
 
         // Məlumatı SQL verilənlər bazasına əlavə et
@@ -202,13 +202,60 @@ window.onload = function() {
             .catch(error => console.error('Error:', error));
         }
     </script>
+    <script>
+        // Serverdən istifadəçiləri gətir
+        function fetchUsers() {
+            fetch('http://localhost:5000/api/users')
+                .then(response => response.json())
+                .then(data => {
+                    const userList = document.getElementById('user-list');
+                    userList.innerHTML = ''; // Siyahını təmizlə
+                    data.forEach(user => {
+                        const li = document.createElement('li');
+                        li.textContent = `İstifadəçi: ${user.username}, Email: ${user.email}`;
+                        userList.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    
+        // Yeni istifadəçi əlavə et
+        document.getElementById('addUserForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+    
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+    
+            fetch('http://localhost:5000/api/addUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('İstifadəçi əlavə olundu!');
+                    fetchUsers();  // Siyahını yenilə
+                } else {
+                    alert('Xəta: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    
+        // Səhifə yüklənəndə istifadəçiləri gətir
+        fetchUsers();
+    </script>
+    
 </head>
 <body>
 
     <div class="form-container">
         <header>
             <div class="company-logo">
-                <img src="logobal1.ico" alt="BALKHOORMA Logo" class="logo">
+                <img src="Balimg.png" alt="BALKHOORMA Logo" class="logo">
             </div>
             <div class="form-title">
                 <h1>"BALKHOORMA" MMC</h1>
@@ -252,7 +299,8 @@ window.onload = function() {
                     <option value="orta">Orta</option>
                     <option value="pese">Peşə</option>
                     <option value="kollec">Kollec</option>
-                    <option value="ali">Ali</option>
+                    <option value="ali">Ali-Bakalavr</option>
+                    <option value="Magistratura">Magistratura</option>
                 </select>
                 
                 <label>İxtisas </label>
